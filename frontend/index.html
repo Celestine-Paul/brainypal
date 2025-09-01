@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainyPal - AI Study Buddy</title>
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font imports -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="BrainyPal - AI-powered study buddy that generates flashcards and practice questions from your notes">
+    <meta name="keywords" content="AI study, flashcards, education, learning, study buddy">
+    <meta property="og:title" content="BrainyPal - AI Study Buddy">
+    <meta property="og:description" content="Transform your study notes into interactive flashcards and practice questions with AI">
+    <meta property="og:type" content="website">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">🧠</div>
+            <div class="loading-text">Loading BrainyPal...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Overlay -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-modal">
+            <div class="auth-header">
+                <h1 class="auth-logo">🧠 BrainyPal</h1>
+                <p>Join thousands of students studying smarter with AI</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Sign Up</div>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="auth-btn">🚀 Login to BrainyPal</button>
+                
+                <div class="divider"><span>or</span></div>
+                
+                <button type="button" class="auth-btn google" onclick="handleSocialLogin('google')">
+                    📧 Continue with Google
+                </button>
+                
+                <p style="text-align: center; margin-top: 15px; color: #718096;">
+                    <a href="#" onclick="showForgotPassword()" style="color: #4ecdc4;">Forgot password?</a>
+                </p>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" required placeholder="••••••••" minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" required> I agree to the <a href="#" style="color: #4ecdc4;">Terms of Service</a> and <a href="#" style="color: #4ecdc4;">Privacy Policy</a>
+                    </label>
+                </div>
+                <button type="submit" class="auth-btn">🎯 Create Account</button>
+                
+                <div class="divider"><span>or</span></div>
+                
+                <button type="button" class="auth-btn google" onclick="handleSocialLogin('google')">
+                    📧 Sign up with Google
+                </button>
+                <button type="button" class="auth-btn github" onclick="handleSocialLogin('github')">
+                    🐙 Sign up with GitHub
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div class="main-app" id="mainApp" style="display: none;">
+        <!-- Floating Background Particles -->
+        <div class="floating-particles" id="particles"></div>
+        
+        <div class="container">
+            <!-- App Header with User Info -->
+            <div class="app-header">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div>
+                        <div style="font-weight: 600;" id="userName">John Doe</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;" id="userEmail">john@example.com</div>
+                    </div>
+                    <div class="subscription-status" id="subscriptionStatus">FREE PLAN</div>
+                </div>
+                <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
+
+            <div class="header">
+                <h1 class="logo">🧠 BrainyPal</h1>
+                <p class="tagline">Your AI-Powered Study Companion for Smarter Learning</p>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('generate')">📚 Generate Content</button>
+                <button class="tab-btn" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+                <button class="tab-btn" onclick="switchTab('quiz')">🧩 Practice Quiz</button>
+                <button class="tab-btn" onclick="switchTab('progress')">📊 Progress</button>
+                <button class="tab-btn premium" onclick="switchTab('analytics')">📈 Analytics</button>
+                <button class="tab-btn" onclick="switchTab('pricing')">💎 Upgrade</button>
+            </div>
+
+            <!-- Generate Content Tab -->
+            <div id="generate" class="tab-content active">
+                <div class="input-section">
+                    <h2 style="margin-bottom: 20px; color: #4a5568;">📝 Create Study Materials</h2>
+                    
+                    <!-- Input Methods Selection -->
+                    <div class="input-methods">
+                        <div class="input-method active" onclick="selectInputMethod('text')">
+                            <div style="font-size: 2rem; margin-bottom: 10px;">✍️</div>
+                            <h3>Type Notes</h3>
+                            <p>Paste or type your study material directly</p>
+                        </div>
+                        <div class="input-method" onclick="selectInputMethod('file')">
+                            <div style="font-size: 2rem; margin-bottom: 10px;">📎</div>
+                            <h3>Upload Files</h3>
+                            <p>Upload PDFs, Word docs, or text files</p>
+                        </div>
+                    </div>
+
+                    <!-- Text Input Method -->
+                    <div id="textInput" class="input-area">
+                        <div class="input-group">
+                            <label for="studyNotes">📝 Study Notes</label>
+                            <textarea id="studyNotes" rows="8" placeholder="Paste your study material here... (lecture notes, textbook chapters, articles, etc.)"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- File Upload Method -->
+                    <div id="fileInput" class="input-area" style="display: none;">
+                        <div class="upload-area">
+                            <input type="file" id="fileUpload" class="file-input" multiple accept=".pdf,.doc,.docx,.txt,.md" onchange="handleFileUpload(event)">
+                            <button type="button" class="file-btn" onclick="document.getElementById('fileUpload').click()">
+                                📎 Choose Files
+                            </button>
+                            <p style="margin-top: 10px; color: #718096; font-size: 14px;">
+                                Supported: PDF, Word, Text files (Max 10MB each)
+                            </p>
+                            <div class="uploaded-files" id="uploadedFiles"></div>
+                        </div>
+                    </div>
+
+                    <!-- Common Settings -->
+                    <div class="input-group">
+                        <label for="topicName">🎯 Topic Name</label>
+                        <input type="text" id="topicName" placeholder="e.g., Photosynthesis, World War II, Calculus Derivatives" required>
+                    </div>
+
+                    <!-- AI Generation Settings -->
+                    <div class="ai-settings">
+                        <div class="setting-group">
+                            <label for="difficultyLevel">📊 Difficulty Level</label>
+                            <select id="difficultyLevel">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="cardCount">🃏 Number of Flashcards</label>
+                            <select id="cardCount">
+                                <option value="5">5 Cards</option>
+                                <option value="10" selected>10 Cards</option>
+                                <option value="15">15 Cards</option>
+                                <option value="20">20 Cards (Premium)</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="questionCount">❓ Quiz Questions</label>
+                            <select id="questionCount">
+                                <option value="3">3 Questions</option>
+                                <option value="5" selected>5 Questions</option>
+                                <option value="10">10 Questions</option>
+                                <option value="15">15 Questions (Premium)</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="contentType">📚 Content Focus</label>
+                            <select id="contentType">
+                                <option value="balanced" selected>Balanced</option>
+                                <option value="definitions">Definitions</option>
+                                <option value="concepts">Key Concepts</option>
+                                <option value="applications">Applications</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="generate-btn" id="generateBtn" onclick="generateStudyMaterials()">
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                        ✨ Generate Study Materials
+                    </button>
+
+                    <!-- Usage Limit for Free Users -->
+                    <div class="premium-limit" id="usageLimit" style="display: none;">
+                        <h4>⚡ Generation Limit Reached</h4>
+                        <p>You've used all your free generations for today. Upgrade to Premium for unlimited AI generations!</p>
+                        <button class="upgrade-btn" onclick="switchTab('pricing')">👑 Upgrade Now</button>
+                    </div>
+                </div>
+
+                <div class="feature-highlight">
+                    <h3>🚀 AI-Powered Learning</h3>
+                    <p>BrainyPal uses advanced AI to transform your notes into interactive flashcards and practice questions. Upload files or paste text, and watch as our AI creates personalized learning content tailored to your needs!</p>
+                </div>
+            </div>
+
+            <!-- Flashcards Tab -->
+            <div id="flashcards" class="tab-content">
+                <div class="study-session">
+                    <div class="session-timer" id="sessionTimer">00:00</div>
+                    <div style="text-align: center;">
+                        <span class="streak-counter">🔥 Streak: <span id="streakCount">0</span></span>
+                        <button class="tab-btn" id="sessionBtn" onclick="toggleStudySession()">▶️ Start Session</button>
+                        <button class="tab-btn" onclick="shuffleCards()" style="margin-left: 10px;">🔀 Shuffle</button>
+                    </div>
+                </div>
+                
+                <div id="flashcardsContainer" class="cards-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">🃏</div>
+                        <h3>No Flashcards Yet</h3>
+                        <p>Generate some study materials first to see your flashcards here!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Tab -->
+            <div id="quiz" class="tab-content">
+                <div class="quiz-header" style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: white; margin-bottom: 10px;">🧩 Practice Quiz</h2>
+                    <div class="quiz-stats">
+                        <span class="quiz-stat">Score: <span id="currentScore">0</span>/<span id="totalQuestions">0</span></span>
+                        <span class="quiz-stat" style="margin-left: 20px;">Time: <span id="quizTimer">00:00</span></span>
+                    </div>
+                </div>
+                
+                <div id="quizContainer">
+                    <div class="empty-state">
+                        <div class="empty-icon">🧩</div>
+                        <h3>No Quiz Questions Yet</h3>
+                        <p>Generate some study materials first to start practicing!</p>
+                    </div>
+                </div>
+                
+                <div class="quiz-controls" style="text-align: center; margin-top: 20px;">
+                    <button class="tab-btn" onclick="startQuiz()" id="startQuizBtn" style="display: none;">🎯 Start Quiz</button>
+                    <button class="tab-btn" onclick="resetQuiz()" id="resetQuizBtn" style="display: none;">🔄 Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- Progress Tab -->
+            <div id="progress" class="tab-content">
+                <div class="progress-section">
+                    <h2 style="margin-bottom: 20px; color: #4a5568;">📊 Your Learning Progress</h2>
+                    
+                    <div class="progress-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCards">0</div>
+                            <div class="stat-label">Total Cards</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="cardsStudied">0</div>
+                            <div class="stat-label">Cards Studied</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="quizScore">0%</div>
+                            <div class="stat-label">Quiz Average</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="studyStreak">0</div>
+                            <div class="stat-label">Study Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="studyTime">0m</div>
+                            <div class="stat-label">Study Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="topicsStudied">0</div>
+                            <div class="stat-label">Topics Mastered</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 15px; color: #4a5568;">Overall Progress</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                        </div>
+                        <p style="text-align: center; color: #718096; margin-top: 10px;">
+                            <span id="progressText">Get started by generating your first study materials!</span>
+                        </p>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div style="margin-top: 30px;">
+                        <h3 style="margin-bottom: 15px; color: #4a5568;">📅 Recent Activity</h3>
+                        <div id="recentActivity" class="activity-list">
+                            <div class="activity-item">
+                                <span class="activity-icon">🎯</span>
+                                <span>Welcome to BrainyPal! Start by generating your first study materials.</span>
+                                <span class="activity-time">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab (Premium Feature) -->
+            <div id="analytics" class="tab-content">
+                <div class="progress-section">
+                    <h2 style="margin-bottom: 20px; color: #4a5568;">📈 Advanced Analytics</h2>
+                    
+                    <div class="analytics-section">
+                        <div class="analytics-card">
+                            <h3 style="margin-bottom: 15px; color: #4a5568;">📊 Performance Trends</h3>
+                            <div class="chart-placeholder">
+                                Performance chart will be rendered here with Chart.js
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3 style="margin-bottom: 15px; color: #4a5568;">🎯 Subject Breakdown</h3>
+                            <div class="chart-placeholder">
+                                Subject distribution pie chart
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3 style="margin-bottom: 15px; color: #4a5568;">📈 Study Patterns</h3>
+                            <div class="chart-placeholder">
+                                Study time patterns and habits
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3 style="margin-bottom: 15px; color: #4a5568;">🏆 Achievements</h3>
+                            <div class="achievements-list">
+                                <div class="achievement-item">🎯 First Quiz Completed</div>
+                                <div class="achievement-item">🔥 7-Day Streak</div>
+                                <div class="achievement-item">📚 100 Cards Studied</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-feature-notice">
+                        <h4>👑 Premium Feature</h4>
+                        <p>Unlock detailed analytics and insights about your learning patterns with BrainyPal Premium!</p>
+                        <button class="upgrade-btn" onclick="switchTab('pricing')">Upgrade Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Tab -->
+            <div id="pricing" class="tab-content">
+                <div class="progress-section">
+                    <h2 style="text-align: center; margin-bottom: 30px; color: #4a5568;">💎 Choose Your Plan</h2>
+                    
+                    <div class="pricing-section">
+                        <!-- Free Plan -->
+                        <div class="pricing-card">
+                            <div class="plan-name">Free</div>
+                            <div class="plan-price">$0</div>
+                            <div class="plan-period">Forever</div>
+                            <ul class="plan-features">
+                                <li>5 AI generations per day</li>
+                                <li>Up to 10 flashcards per generation</li>
+                                <li>Basic quiz questions</li>
+                                <li>Progress tracking</li>
+                                <li>Web access</li>
+                            </ul>
+                            <button class="auth-btn" onclick="selectPlan('free')">Current Plan</button>
+                        </div>
+
+                        <!-- Premium Plan -->
+                        <div class="pricing-card popular">
+                            <div class="plan-name">Premium</div>
+                            <div class="plan-price">$9.99</div>
+                            <div class="plan-period">per month</div>
+                            <ul class="plan-features">
+                                <li>Unlimited AI generations</li>
+                                <li>Up to 50 flashcards per generation</li>
+                                <li>Advanced quiz types</li>
+                                <li class="premium">Detailed analytics</li>
+                                <li class="premium">Spaced repetition algorithm</li>
+                                <li class="premium">Export to Anki/PDF</li>
+                                <li class="premium">Mobile app access</li>
+                                <li class="premium">Priority AI processing</li>
+                                <li class="premium">Custom themes</li>
+                            </ul>
+                            <button class="auth-btn" onclick="selectPlan('premium')">🚀 Upgrade to Premium</button>
+                        </div>
+
+                        <!-- Pro Plan -->
+                        <div class="pricing-card">
+                            <div class="plan-name">Pro</div>
+                            <div class="plan-price">$19.99</div>
+                            <div class="plan-period">per month</div>
+                            <ul class="plan-features">
+                                <li>Everything in Premium</li>
+                                <li class="premium">AI tutor chat</li>
+                                <li class="premium">Collaborative study groups</li>
+                                <li class="premium">Advanced AI models</li>
+                                <li class="premium">API access</li>
+                                <li class="premium">White-label options</li>
+                                <li class="premium">Priority support</li>
+                            </ul>
+                            <button class="auth-btn" onclick="selectPlan('pro')">⭐ Go Pro</button>
+                        </div>
+                    </div>
+
+                    <div class="feature-highlight">
+                        <h3>💳 Secure Payment</h3>
+                        <p>All payments are processed securely through Stripe. Cancel anytime with no hidden fees. 30-day money-back guarantee!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div class="achievement-popup" id="achievementPopup">
+        🏆 <span id="achievementText"></span>
+    </div>
+1
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notificationToast">
+        <span id="notificationText"></span>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal" style="display: none;">
+        <div class="payment-content">
+            <h3>💳 Upgrade to Premium</h3>
+            <div class="payment-summary">
+                <p>BrainyPal Premium - $9.99/month</p>
+                <p>✨ Unlimited AI generations</p>
+                <p>📊 Advanced analytics</p>
+                <p>📱 Mobile app access</p>
+            </div>
+            <div id="stripe-card-element">
+                <!-- Stripe Elements will be inserted here -->
+                <div style="padding: 20px; background: #f7fafc; border-radius: 8px; text-align: center;">
+                    Stripe payment form would be integrated here
+                </div>
+            </div>
+            <div class="payment-actions">
+                <button class="auth-btn" onclick="processPayment()">💎 Subscribe Now</button>
+                <button class="tab-btn" onclick="closePaymentModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include external JavaScript files -->
+<script src="app.js"></script>
+<script src="auth.js"></script>
+    <script src="js/ai-integration.js"></script>
+    
+    <!-- Initialize the application -->
+    <script>
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+    </script>
+</body>
+</html>
