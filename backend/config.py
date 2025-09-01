@@ -8,7 +8,7 @@ class Config:
     """Base configuration class"""
     
     # Basic Flask settings
-    SECRET_KEY = os.environ.get('SECRET_KEY') or '31b4e04b93c757b5913b3404ac4c40a50abb93b80bd1057d82e6ba7d0cb6a57c'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret key here'
     
     # MySQL Database configuration
     # Format: mysql://username:password@localhost/database_name
@@ -39,7 +39,7 @@ SQLALCHEMY_ENGINE_OPTIONS = {
     }
     
     # JWT Configuration
-JWT_SECRET_KEY = 'TMYZ-mE4ILrgKBzSuJxow_p2F2WiHynkCluzOK86Yyc'
+JWT_SECRET_KEY = ' os.getenv("JWT_KEY")'
 JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
 JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
 JWT_ALGORITHM = 'HS256'
@@ -76,8 +76,8 @@ CORS_ORIGINS = [
 MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.gmail.com' 
 MAIL_PORT = int(os.environ.get('MAIL_PORT') or 587)
 MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']
-MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'celestinelenah24@gmail.com' 
-MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or '#celestine2016'
+MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'email here' 
+MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'email password here'
 MAIL_DEFAULT_SENDER = os.environ.get('noreply@brainypal.com') or MAIL_USERNAME
     
     # Redis Configuration (for caching and sessions)
@@ -132,13 +132,16 @@ class DevelopmentConfig(Config):
     TESTING = False
     
     # Use local MySQL for development
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://brainypal:%23celestine2016.@localhost:3306/brainypal_db'
+    SQLALCHEMY_DATABASE_URI = (
+         f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+    f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+    )
     
     # Relaxed CORS for development
     CORS_ORIGINS = ['*']
     
     # paystack sandbox for development
-    PAYSTACK_BASE_URL = 'https://paystack.shop/pay/dzz56voe29'
+    PAYSTACK_BASE_URL = 'https://api.paystack.com'
     
     # Development logging
     SQLALCHEMY_ENGINE_OPTIONS = {
@@ -157,8 +160,8 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         f'mysql+pymysql://{Config.MYSQL_USER}:{Config.MYSQL_PASSWORD}@{Config.MYSQL_HOST}:{Config.MYSQL_PORT}/{Config.MYSQL_DATABASE}'
     
-    # Production IntaSend
-    PAYSTACK_BASE_URL = 'https://paystack.shop/pay/dzz56voe29'
+    # Production paystack
+    PAYSTACK_BASE_URL = 'https://api.paystack.com'
     
     # Enhanced security for production
     SESSION_COOKIE_SECURE = True
