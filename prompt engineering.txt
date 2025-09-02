@@ -1,0 +1,113 @@
+ BrainyPal Prompt Engineering Journey 
+
+1. Initial Architecture Prompt
+
+I need to build a complete AI study buddy application called "BrainyPal" for the Kenyan market. Please create a modular file structure with:
+BACKEND (Python/Flask):
+- Main application with authentication & API endpoints
+- Database models for users, subscriptions, flashcards, quizzes
+- AI integration for generating study materials
+- Payment integration for African markets (Paystack preferred)
+- Subscription management with tiered pricing
+
+FRONTEND (Vanilla JS/HTML/CSS):
+- Responsive single-page application
+- Authentication flows (login/register)
+- Study interfaces (flashcards, quizzes, progress)
+- Payment integration UI
+- Mobile-optimized design
+
+REQUIREMENTS:
+- Pricing: KES 999 (Premium), KES 1999 (Pro)
+- Features: Free (limited), Premium (enhanced), Pro (unlimited)
+- AI: Free/low-cost provider preferred
+- Files: PDF, DOCX, TXT processing
+- Database: MySQL with fallback to SQLite
+
+Please provide complete, production-ready files with clear integration points and setup instructions.
+
+2. Setup Guidance Prompt
+
+Provide a step-by-step setup guide with:
+
+1. REQUIRED API KEYS & CREDENTIALS:
+   - Where to obtain each service key
+   - Specific configuration steps
+   - Free tier limitations and alternatives
+
+2. ENVIRONMENT CONFIGURATION:
+   - Exact .env file contents needed
+   - Database setup commands
+   - Development vs production settings
+
+3. FILE MODIFICATION CHECKLIST:
+   - Which files need API keys
+   - Configuration points requiring customization
+   - Integration testing steps
+
+4. FALLBACK OPTIONS:
+   - Demo mode for testing without APIs
+   - SQLite setup if MySQL unavailable
+   - Local development alternatives
+
+Include actual commands, file paths, and troubleshooting for common setup issues
+
+3. AI Service Selection Prompt
+
+AI SERVICE DECISION:
+I've chosen Hugging Face 
+
+REQUIREMENTS:
+- Generate flashcards from text/PDFs
+- Create multiple-choice quizzes
+- Summarize study materials
+- Handle 5-10 requests per minute
+- Support offline fallbacks if API fails
+
+Please update all AI integration code for Hugging Face, including:
+- Model selection for different tasks
+- Rate limiting handling
+- Fallback content generation
+- Error recovery mechanisms
+- Cost optimization strategies
+
+4. Payment Integration Correction
+
+REQUIREMENT CHANGE: Use Paystack (not Stripe) because:
+- Better support for Kenyan payment methods
+- M-Pesa and bank transfer integration
+- Lower fees for African transactions
+- Local customer support
+
+AFFECTED COMPONENTS:
+- Backend payment processing
+- Frontend payment forms
+- Subscription management
+- Webhook handling
+- Currency handling (KES)
+
+SPECIFIC NEEDS:
+- Subscription billing (monthly)
+- One-time payments for upgrades
+- Failed payment handling
+- Cancellation management
+- Test mode for development
+
+Please update all payment-related files with Paystack integration and provide:
+- Setup instructions for Paystack dashboard
+- Test credentials and testing procedure
+
+5. Deployment prompt
+
+Ineed to deploy my Brainypal app with MySQL database to production.
+My tech stack:html,javascript,python
+My files: index.html,styles.css,config.py, app.py, requirements.txt
+Experience level: beginner
+Budget: free
+Please recommend the best platform and give me step-by-step deployment instructions. Include:
+Platform setup
+Database configuration
+Environment variables
+Testing the deployed app
+
+Assume I need detailed explanations for each step.
