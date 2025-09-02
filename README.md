@@ -8,6 +8,13 @@
 [![Payments](https://img.shields.io/badge/Payments-Paystack-purple.svg)](https://paystack.com)
 ## LINK TO PITCH DECK
 https://www.canva.com/design/DAGxvbKerJ0/JQUti-ljJ8t5wC3TUqkINQ/edit?utm_content=DAGxvbKerJ0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+## LINK TO DEPLOYED APP
+https://hackathon-2-liard-chi.vercel.app/
+
+https://hackathon-2-jdgppxcu0-celestine-pauls-projects.vercel.app/
+
+https://hackathon-2-git-main-celestine-pauls-projects.vercel.app/
+
 ## 🌟 What is BrainyPal?
 
 BrainyPal is an AI-powered study application that helps students learn more effectively by:
