@@ -29,7 +29,7 @@ Perfect for students in Kenya and across Africa who want to study smarter, not h
 - **File upload support** - PDF, DOCX, TXT files (5MB limit)
 - **Community support** - Get help from other students
 
-### 💎 Premium Plan - KES 500/month (~$3.88)
+### 💎 Premium Plan - KES 999/month (~$9.99)
 - **100 flashcards per day** - Unlimited studying power
 - **25 quizzes per day** - Extensive testing
 - **5 AI study plans per month** - Personalized learning paths
@@ -37,7 +37,7 @@ Perfect for students in Kenya and across Africa who want to study smarter, not h
 - **Priority support** - Get help faster
 - **Export features** - Download your study materials
 
-### 🚀 Pro Plan - KES 999/month (~$7.76)
+### 🚀 Pro Plan - KES 1999/month (~$19.99)
 - **Unlimited everything** - No limits on any features
 - **Advanced AI insights** - Sophisticated learning recommendations
 - **Team collaboration** - Study with classmates
@@ -324,12 +324,12 @@ pip install -r backend/requirements.txt
 python backend/app.py
 ```
 
-### Option 2: Railway Deployment
-Go to: https://railway.app
+### Option 2: vercel Deployment
+Go to: https://vercel.app
 Sign up with GitHub
 Click "Deploy from GitHub"
 Select your repository
-Railway will automatically detect it's a Python app
+vercel will automatically detect it's a Python app
 
 
 **Environment Variables for Production:**
@@ -515,35 +515,35 @@ tail -f logs/app.log
 ```
 
 ### Getting Help
-- **Documentation**: [Wiki](https://github.com/yourusername/brainypal/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/brainypal/issues)
+- **Documentation**: 
+- **Issues**: 
 - **Email**: support@brainypal.com
 - **WhatsApp**: +254748973295
 
 ## 🛣️ Roadmap
 
-### Phase 1 (Current) ✅
+### Phase 1 
 - [x] AI flashcard generation
 - [x] Quiz creation and taking
 - [x] User authentication
 - [x] Paystack payment integration
 - [x] Progress tracking
 
-### Phase 2 (Next 3 months)
+### Phase 2 
 - [ ] Mobile app (React Native)
 - [ ] Offline study mode
 - [ ] Spaced repetition algorithm
 - [ ] Voice note processing
 - [ ] Collaborative study groups
 
-### Phase 3 (6 months)
+### Phase 3 
 - [ ] LMS integration (Moodle, Canvas)
 - [ ] Advanced AI tutoring
 - [ ] Gamification features
 - [ ] Multi-language support (Swahili)
 - [ ] Teacher dashboard
 
-### Phase 4 (1 year)
+### Phase 4
 - [ ] AR/VR study experiences
 - [ ] AI study buddy chat
 - [ ] University partnerships
@@ -617,7 +617,7 @@ tail -f logs/app.log
 ### Get Help
 - **Email**: support@brainypal.com
 - **WhatsApp**: +25474897329
-- **Documentation**: https://www.canva.com/design/DAGxvbKerJ0/JQUti-ljJ8t5wC3TUqkINQ/edit?utm_content=DAGxvbKerJ0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+- **Documentation**: 
 
 ### Business Inquiries
 - **Partnerships**: partnerships@brainypal.com
