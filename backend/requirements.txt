@@ -21,7 +21,7 @@ bcrypt==4.0.1
 
 # AI and NLP
 transformers==4.35.2
-torch==2.1.1
+torch
 nltk==3.8.1
 spacy==3.7.2
 scikit-learn==1.3.2
