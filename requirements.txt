@@ -16,7 +16,7 @@ transformers==4.34.0
 torch
 huggingface_hub==0.17.3
 nltk==3.8.1
-spacy==3.7.2
+spacy==3.7.2 --find-links  https://download.pytorch.org/whl/torch_stable.html
 sentence-transformers==2.2.2
 datasets==2.14.5
 tokenizers==0.13.3
