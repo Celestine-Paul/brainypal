@@ -22,24 +22,31 @@ class PaystackPaymentProcessor:
             "Content-Type": "application/json"
         }
         
+        PLANS = {
+    "free": 0,
+    "premium": 500,
+    "pro": 1000
+}
+
         # Kenyan pricing in KES (Paystack supports KES)
         self.plans = {
             'premium': {
                 'name': 'Premium Plan',
-                'amount': 99900,  # KES 999 in kobo (multiply by 100)
+                'amount': $3.8,  # KES 500 in kobo (multiply by 100)
                 'currency': 'KES',
                 'interval': 'monthly',
                 'features': [
                     '100 flashcards per day',
-                    '25 quizzes per day',
-                    '5 AI study plans per month',
+                    '50 quizzes per day',
+                    '20 AI study plans per month',
                     'Advanced analytics',
                     'Priority support'
+                    'Answers to all questions'
                 ]
             },
             'pro': {
                 'name': 'Pro Plan', 
-                'amount': 199900,  # KES 1999 in kobo
+                'amount': $7.7 ( 1000ksh.)in kobo
                 'currency': 'KES',
                 'interval': 'monthly',
                 'features': [
@@ -49,6 +56,8 @@ class PaystackPaymentProcessor:
                     'Advanced analytics',
                     'Team collaboration',
                     'API access'
+                    'answers to all asked question'
+                    'detailed essay explanation'
                 ]
             }
         }

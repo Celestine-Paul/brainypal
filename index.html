@@ -70,7 +70,7 @@
             <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
                 <div class="form-group">
                     <label for="regName">Full Name</label>
-                    <input type="text" id="regName" required placeholder="John Doe">
+                    <input type="text" id="regName" required placeholder = "your name">
                 </div>
                 <div class="form-group">
                     <label for="regEmail">Email</label>
@@ -95,9 +95,6 @@
                 
                 <button type="button" class="auth-btn google" onclick="handleSocialLogin('google')">
                     📧 Sign up with Google
-                </button>
-                <button type="button" class="auth-btn github" onclick="handleSocialLogin('github')">
-                    🐙 Sign up with GitHub
                 </button>
             </form>
         </div>
@@ -136,6 +133,19 @@
                 <button class="tab-btn" onclick="switchTab('pricing')">💎 Upgrade</button>
             </div>
 
+<!-- History -->
+<section class="card">
+  <h2>Search History</h2>
+  <div id="history"></div>
+</section>
+
+<!-- Progress -->
+<section class="card">
+  <h2>Progress Analysis</h2>
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressFill">0%</div>
+  </div>
+
             <!-- Generate Content Tab -->
             <div id="generate" class="tab-content active">
                 <div class="input-section">
@@ -154,6 +164,13 @@
                             <p>Upload PDFs, Word docs, or text files</p>
                         </div>
                     </div>
+                               <!-- Direct Search -->
+<section class="card">
+  <h2>Ask a Question / Search Topic</h2>
+  <input type="text" id="searchBox" placeholder="Type a question or topic...">
+  <button onclick="directSearch()">Search</button>
+  <div id="searchAnswer"></div>
+</section>
 
                     <!-- Text Input Method -->
                     <div id="textInput" class="input-area">
@@ -177,48 +194,44 @@
                         </div>
                     </div>
 
-                    <!-- Common Settings -->
-                    <div class="input-group">
-                        <label for="topicName">🎯 Topic Name</label>
-                        <input type="text" id="topicName" placeholder="e.g., Photosynthesis, World War II, Calculus Derivatives" required>
-                    </div>
-
                     <!-- AI Generation Settings -->
                     <div class="ai-settings">
                         <div class="setting-group">
                             <label for="difficultyLevel">📊 Difficulty Level</label>
                             <select id="difficultyLevel">
                                 <option value="beginner">Beginner</option>
-                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="intermediate">Intermediate</option>
                                 <option value="advanced">Advanced</option>
                             </select>
                         </div>
                         <div class="setting-group">
                             <label for="cardCount">🃏 Number of Flashcards</label>
                             <select id="cardCount">
-                                <option value="5">5 Cards</option>
-                                <option value="10" selected>10 Cards</option>
-                                <option value="15">15 Cards</option>
-                                <option value="20">20 Cards (Premium)</option>
+                                <option value="3">3 Cards</option>
+                                <option value="20" selected>20 Cards</option>
+                                <option value="30">30 Cards</option>
+                                <option value="50">50 Cards (Premium)</option>
                             </select>
                         </div>
                         <div class="setting-group">
                             <label for="questionCount">❓ Quiz Questions</label>
                             <select id="questionCount">
-                                <option value="3">3 Questions</option>
-                                <option value="5" selected>5 Questions</option>
-                                <option value="10">10 Questions</option>
-                                <option value="15">15 Questions (Premium)</option>
+                                <option value="15">15 Questions</option>
+                                <option value="20" selected>20 Questions</option>
+                                <option value="30">30 Questions</option>
+                                <option value="50">50 Questions (Premium)</option>
                             </select>
-                        </div>
                         <div class="setting-group">
-                            <label for="contentType">📚 Content Focus</label>
-                            <select id="contentType">
-                                <option value="balanced" selected>Balanced</option>
-                                <option value="definitions">Definitions</option>
+                        <label for="contentType">📚 Content Mode</label>
+                        <select id="contentType">
+                                <option value="balanced" selected>Balanced Mix</option>
+                                <option value="definitions">Definitions Only</option>
                                 <option value="concepts">Key Concepts</option>
-                                <option value="applications">Applications</option>
-                            </select>
+                                <option value="applications"> context Applications</option>
+                                <option value="flashcards">Flashcards</option>
+                                <option value="questions">Practice Questions</option>
+                                <option value="qa">Q&A (Ask and Answer)</option>
+                       </select>
                         </div>
                     </div>
 
@@ -255,8 +268,8 @@
                 <div id="flashcardsContainer" class="cards-grid">
                     <div class="empty-state">
                         <div class="empty-icon">🃏</div>
-                        <h3>No Flashcards Yet</h3>
-                        <p>Generate some study materials first to see your flashcards here!</p>
+                        <h3> Flashcards </h3>
+                        <p>Generate some study materials to see your flashcards here!</p>
                     </div>
                 </div>
             </div>
@@ -274,8 +287,8 @@
                 <div id="quizContainer">
                     <div class="empty-state">
                         <div class="empty-icon">🧩</div>
-                        <h3>No Quiz Questions Yet</h3>
-                        <p>Generate some study materials first to start practicing!</p>
+                        <h3>Quiz Questions </h3>
+                        <p>Generate some study materials to start practicing!</p>
                     </div>
                 </div>
                 
@@ -396,8 +409,8 @@
                             <div class="plan-period">Forever</div>
                             <ul class="plan-features">
                                 <li>5 AI generations per day</li>
-                                <li>Up to 10 flashcards per generation</li>
-                                <li>Basic quiz questions</li>
+                                <li>Up to 25 flashcards per generation</li>
+                                <li>Intermediate quiz questions</li>
                                 <li>Progress tracking</li>
                                 <li>Web access</li>
                             </ul>
@@ -407,7 +420,7 @@
                         <!-- Premium Plan -->
                         <div class="pricing-card popular">
                             <div class="plan-name">Premium</div>
-                            <div class="plan-price">$9.99</div>
+                            <div class="plan-price">$ 3.8</div>
                             <div class="plan-period">per month</div>
                             <ul class="plan-features">
                                 <li>Unlimited AI generations</li>
@@ -426,7 +439,7 @@
                         <!-- Pro Plan -->
                         <div class="pricing-card">
                             <div class="plan-name">Pro</div>
-                            <div class="plan-price">$19.99</div>
+                            <div class="plan-price">$ 7.7</div>
                             <div class="plan-period">per month</div>
                             <ul class="plan-features">
                                 <li>Everything in Premium</li>
@@ -443,7 +456,7 @@
 
                     <div class="feature-highlight">
                         <h3>💳 Secure Payment</h3>
-                        <p>All payments are processed securely through Stripe. Cancel anytime with no hidden fees. 30-day money-back guarantee!</p>
+                        <p>All payments are processed securely through paystack. Cancel anytime with no hidden fees. 30-day money-back guarantee!</p>
                     </div>
                 </div>
             </div>
@@ -465,15 +478,15 @@
         <div class="payment-content">
             <h3>💳 Upgrade to Premium</h3>
             <div class="payment-summary">
-                <p>BrainyPal Premium - $9.99/month</p>
+                <p>BrainyPal Premium - $3.8/month</p>
                 <p>✨ Unlimited AI generations</p>
                 <p>📊 Advanced analytics</p>
                 <p>📱 Mobile app access</p>
             </div>
             <div id="stripe-card-element">
-                <!-- Stripe Elements will be inserted here -->
+                <!-- paystack Elements will be inserted here -->
                 <div style="padding: 20px; background: #f7fafc; border-radius: 8px; text-align: center;">
-                    Stripe payment form would be integrated here
+                    paystack payment form would be integrated here
                 </div>
             </div>
             <div class="payment-actions">
@@ -484,7 +497,7 @@
     </div>
 
     <!-- Include external JavaScript files -->
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 <script src="auth.js"></script>
     <script src="js/ai-integration.js"></script>
     
@@ -497,3 +510,7 @@
     </script>
 </body>
 </html>
+
+<footer>
+  <p>Copyright © Celestine Paul</p>
+</footer>

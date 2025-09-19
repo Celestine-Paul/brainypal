@@ -142,7 +142,8 @@ class AIContentGenerator {
                     
                     Format each flashcard as:
                     Q: [Question]
-                    A: [Answer]
+                    A: [Answer a,b,c,d]
+                    A: [Correct answer]
                     ---`;
         } else {
             return `${basePrompt}Generate ${settings.questionCount} multiple choice questions about ${topic}.

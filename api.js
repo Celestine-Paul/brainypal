@@ -8,6 +8,26 @@ class APIService {
         this.retryAttempts = CONFIG.API.RETRY_ATTEMPTS;
     }
 
+// app.js
+{ export async function generateStudy(notes, contentType) {
+  try {
+    const res = await fetch("/api/generate-study", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ notes, contentType })
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (err) {
+    console.error("❌ Error generating study material:", err);
+    return { error: "Failed to generate study material. Please try again." };
+  }
+}
+
     /**
      * Make HTTP request with retry logic
      * @param {string} endpoint - API endpoint key
